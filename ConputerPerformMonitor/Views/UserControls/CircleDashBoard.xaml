@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="ConputerPerformMonitor.Views.UserControls.CircleDashBoard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
+             xmlns:element="clr-namespace:ConputerPerformMonitor.Views.UserControls"
+             xmlns:card="ConputerPerformMonitor.Views.UserControls.DashBoardCard"
+             Name="circledashboard">
+    <UserControl.Resources>
+        
+        <element:TemperatureToAngleConverter x:Key="TempToAngleConverter"/>
+    
+    </UserControl.Resources>
+    <Grid>
+        
+        <ProgressBar Style="{StaticResource styleProgressBar}" Value="{Binding CoreTemp, RelativeSource={RelativeSource AncestorType=element:DashBoardCard}, Converter={StaticResource TempToAngleConverter}}" Background="Gray" Foreground="Green"/>
+        
+        <TextBlock Text="{Binding CircleDashBoardCenterText, RelativeSource={RelativeSource AncestorType=element:DashBoardCard}}" Foreground="#edeeee" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+    </Grid>
+    
+</UserControl>

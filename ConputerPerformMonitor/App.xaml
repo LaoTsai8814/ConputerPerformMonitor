@@ -1,0 +1,65 @@
+﻿<Application x:Class="ConputerPerformMonitor.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ConputerPerformMonitor"
+             xmlns:ed ="http://schemas.microsoft.com/expression/2010/drawing"
+             xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <Style x:Key="styleProgressBar" TargetType="ProgressBar">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="100"/>
+            <Setter Property="Maximum" Value="360"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ProgressBar">
+                        
+                            <Grid Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <ed:Arc ArcThickness="10" StartAngle="225" EndAngle="135" Fill="{TemplateBinding Background}" Stretch="None" />
+                                <ed:Arc ArcThickness="10" StartAngle="225" EndAngle="{TemplateBinding Value}" Fill="{TemplateBinding Foreground}" Stretch="None"  />
+                            </Grid>
+                        
+                        
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="Pagesidebutton" TargetType="Button">
+            <Setter Property="Height" Value="40"></Setter>
+            <Setter Property="Width" Value="40"></Setter>
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="Foreground" Value="#edeeee"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Margin" Value="20"></Setter>
+            <Setter Property="Template" >
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#9d9d9d"/>
+                    <Setter Property="Foreground" Value="#7368ff"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="PagesidebuttonIcon" TargetType="Icon:PackIconMaterial">
+            <Setter Property="Height" Value="25"></Setter>
+            <Setter Property="Width" Value="25"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=Foreground,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Button}}}"></Setter>
+        </Style>
+        <Style x:Key="DashBoardCard" TargetType="Border">
+            <Setter Property="Background" Value="#1e2e44"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Margin" Value="20"/>
+        </Style>
+    </Application.Resources>
+</Application>
