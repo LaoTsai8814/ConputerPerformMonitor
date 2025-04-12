@@ -13,15 +13,10 @@ namespace ConputerPerformMonitor.Models
 {
     public class TemperatureManage
     {
-
         public static event Action<TemperatureData>? UpdateTemp;
-
-        private static ConcurrentDictionary<string, float> LoadStatus = new();
         public TemperatureManage()
         {
-
             _ = UpdateTemperature();
-
         }
         public async Task UpdateTemperature()
         {
@@ -37,8 +32,6 @@ namespace ConputerPerformMonitor.Models
                 IsControllerEnabled = true,
                 IsNetworkEnabled = true,
                 IsPsuEnabled = true
-
-
             };
             try
             {
@@ -56,30 +49,27 @@ namespace ConputerPerformMonitor.Models
                         TemperatureData temperatureData = new();
                         foreach (var sensor in hardware.Sensors)
                         {
+                            
                             if (sensor.SensorType == SensorType.Load)
                             {
                                 //Trace.WriteLine($"传感器名称: {sensor.Name}, 值: {sensor.Value}%");
-
-                                LoadStatus[sensor.Name] = sensor.Value ?? 0;
-
+                                Trace.WriteLine($"传感器名称: {sensor.Name}, 值: {sensor.Value}%");
                                 temperatureData.temperatures.Add(new Temperature
                                 {
                                     Name = sensor.Name,
                                     Value = sensor.Value
                                 });
-
-
-
                             }
+                            
                         }
                         if (temperatureData.temperatures.Count > 0)
                         {
                             UpdateTemp?.Invoke(temperatureData);
                         }
                         temperatureData.temperatures.Clear();
+                        
                     }
                     await Task.Delay(500);
-
                 }
             }
             catch (Exception e)
@@ -90,11 +80,6 @@ namespace ConputerPerformMonitor.Models
             {
                 //computer.Close();
             }
-
-
-
-
-
         }
     }
     public class TemperatureData

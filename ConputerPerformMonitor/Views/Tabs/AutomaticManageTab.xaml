@@ -1,0 +1,11 @@
+﻿<UserControl x:Class="ConputerPerformMonitor.Views.Tabs.AutomaticManage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ConputerPerformMonitor.Views.Tabs"
+             >
+    <Grid>
+        <local:ReportManageTab Hour="{Binding Hour}" Minute="{Binding Minute}" Second="{Binding Second}" IsAutoUpdateActive="{Binding IsAutoUpdate}" IsManuallyUpdateActive="{Binding IsManually}"></local:ReportManageTab>
+    </Grid>
+</UserControl>

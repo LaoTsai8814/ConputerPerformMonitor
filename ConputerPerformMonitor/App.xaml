@@ -6,60 +6,123 @@
              xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <Style x:Key="styleProgressBar" TargetType="ProgressBar">
-            <Setter Property="Width" Value="100"/>
-            <Setter Property="Height" Value="100"/>
-            <Setter Property="Maximum" Value="360"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ProgressBar">
-                        
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <Style x:Key="styleProgressBar" TargetType="ProgressBar">
+                <Setter Property="Width" Value="100"/>
+                <Setter Property="Height" Value="100"/>
+                <Setter Property="Maximum" Value="360"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ProgressBar">
                             <Grid Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <ed:Arc ArcThickness="10" StartAngle="225" EndAngle="135" Fill="{TemplateBinding Background}" Stretch="None" />
                                 <ed:Arc ArcThickness="10" StartAngle="225" EndAngle="{TemplateBinding Value}" Fill="{TemplateBinding Foreground}" Stretch="None"  />
                             </Grid>
-                        
-                        
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="Pagesidebutton" TargetType="Button">
-            <Setter Property="Height" Value="40"></Setter>
-            <Setter Property="Width" Value="40"></Setter>
-            <Setter Property="Background" Value="Transparent"></Setter>
-            <Setter Property="Foreground" Value="#edeeee"></Setter>
-            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-            <Setter Property="Margin" Value="20"></Setter>
-            <Setter Property="Template" >
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="10">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#9d9d9d"/>
-                    <Setter Property="Foreground" Value="#7368ff"></Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="PagesidebuttonIcon" TargetType="Icon:PackIconMaterial">
-            <Setter Property="Height" Value="25"></Setter>
-            <Setter Property="Width" Value="25"></Setter>
-            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-            <Setter Property="Foreground" Value="{Binding Path=Foreground,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Button}}}"></Setter>
-        </Style>
-        <Style x:Key="DashBoardCard" TargetType="Border">
-            <Setter Property="Background" Value="#1e2e44"/>
-            <Setter Property="Padding" Value="20"/>
-            <Setter Property="CornerRadius" Value="10"/>
-            <Setter Property="Margin" Value="20"/>
-        </Style>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="Pagesidebutton" TargetType="Button">
+                <Setter Property="Height" Value="40"></Setter>
+                <Setter Property="Width" Value="40"></Setter>
+                <Setter Property="Background" Value="Transparent"></Setter>
+                <Setter Property="Foreground" Value="#edeeee"></Setter>
+                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                <Setter Property="Margin" Value="20"></Setter>
+                <Setter Property="Template" >
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#9d9d9d"/>
+                        <Setter Property="Foreground" Value="#7368ff"></Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="PagesidebuttonIcon" TargetType="Icon:PackIconMaterial">
+                <Setter Property="Height" Value="25"></Setter>
+                <Setter Property="Width" Value="25"></Setter>
+                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                <Setter Property="Foreground" Value="{Binding Path=Foreground,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Button}}}"></Setter>
+            </Style>
+            <Style x:Key="DashBoardCard" TargetType="Border">
+                <Setter Property="Background" Value="#1e2e44"/>
+                <Setter Property="Padding" Value="20"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="Margin" Value="20"/>
+            </Style>
+            <Style x:Key="DetailInfoTab" TargetType="ListViewItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="Background" Value="#1e2e44"/>
+                <Setter Property="Foreground" Value="#edeeee"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <!-- 明确设置透明边框 -->
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListViewItem">
+                            <Border 
+                Name="Bd"
+                Background="{TemplateBinding Background}" 
+                BorderBrush="{TemplateBinding BorderBrush}" 
+                BorderThickness="0"
+                Padding="5"
+                CornerRadius="5">
+                                <ContentPresenter Content="{TemplateBinding Content}" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <!-- 悬浮效果 -->
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bd" Property="Background" Value="#2a3e5c"/>
+                                </Trigger>
+                                <!-- 选中效果 -->
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="Bd" Property="Background" Value="#3b5070"/>
+                                    <Setter TargetName="Bd" Property="BorderBrush" Value="#7166f9"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="TextBoxTemplate" TargetType="TextBox">
+                <Setter Property="Background" Value="#1e2e44"/>
+                <Setter Property="Foreground" Value="#edeeee"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TextBox">
+                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                </ContentPresenter>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#2a3e5c"/>
+                                </Trigger>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter Property="Background" Value="#3b5070"/>
+                                    <Setter Property="BorderBrush" Value="#7166f9"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+        
     </Application.Resources>
 </Application>

@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="ConputerPerformMonitor.Views.Tabs.ReportManageTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ConputerPerformMonitor.Views.Tabs"
+             xmlns:uc="clr-namespace:ConputerPerformMonitor.Views.UserControls"
+             xmlns:hc="https://handyorg.github.io/handycontrol"             >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml"/>
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
+
+    </UserControl.Resources>
+    <Grid>
+        <hc:ScrollViewer>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="250">
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Text="AutoUpdate" Foreground="#edeeee" Margin="15"></TextBlock>
+                    <ToggleButton Style="{StaticResource ToggleButtonSwitch}" IsChecked="{Binding IsAutoUpdateActive,RelativeSource={RelativeSource AncestorType=local:ReportManageTab}, Mode=TwoWay}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Text="ManualUpdate" Foreground="#edeeee" Margin="15"></TextBlock>
+                    <ToggleButton Margin="0,6,0,0" IsChecked="{Binding IsManuallyUpdateActive,RelativeSource={RelativeSource AncestorType=local:ReportManageTab}}" Style="{StaticResource ToggleButtonSwitch}"/>
+                </StackPanel>
+                <UniformGrid Columns="4" Margin="15" Visibility="{Binding IsManuallyUpdateActive,RelativeSource={RelativeSource AncestorType=local:ReportManageTab},Converter={StaticResource Boolean2VisibilityConverter}, Mode=TwoWay}">
+                    <StackPanel Orientation="Vertical" >
+                        <TextBlock Text="Hour" HorizontalAlignment="Center" Foreground="#edeeee" Margin="5"></TextBlock>
+                        <TextBox Text="{Binding Hour,RelativeSource={RelativeSource AncestorType=local:ReportManageTab},ValidatesOnDataErrors=True}" Style="{StaticResource TextBoxExtend}" Margin="5" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" >
+                        <TextBlock Text="Minute" HorizontalAlignment="Center" Foreground="#edeeee" Margin="5"></TextBlock>
+                        <TextBox Text="{Binding Minute,RelativeSource={RelativeSource AncestorType=local:ReportManageTab},ValidatesOnDataErrors=True}"  Style="{StaticResource TextBoxExtend}" Margin="5" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" >
+                        <TextBlock Text="Second" HorizontalAlignment="Center" Foreground="#edeeee" Margin="5"></TextBlock>
+                        <TextBox Text="{Binding Second,RelativeSource={RelativeSource AncestorType=local:ReportManageTab},ValidatesOnDataErrors=True}"  Style="{StaticResource TextBoxExtend}" Margin="5" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <Button Style="{StaticResource ButtonPrimary}" Command="{Binding Save}" Content="SAVE"/>
+                </UniformGrid>
+
+            </StackPanel>
+        </hc:ScrollViewer>
+
+        
+
+    </Grid>
+</UserControl>

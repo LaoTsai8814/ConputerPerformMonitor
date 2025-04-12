@@ -30,12 +30,11 @@
                     <StackPanel HorizontalAlignment="Right">
                     </StackPanel>
                     <StackPanel>
-                        <uc:SideButton Icon="Home" ></uc:SideButton>
-                        <uc:SideButton Icon="MonitorDashboard" ></uc:SideButton>
-                        <uc:SideButton Icon="FileCompare"/>
-                        <uc:SideButton Icon="AlarmLight"></uc:SideButton>
-                        <uc:SideButton Icon="SettingsHelper" ></uc:SideButton>
-                        
+                        <uc:SideButton Icon="Home" Command="{Binding SideButtonCommand[Home]}"></uc:SideButton>
+                        <uc:SideButton Icon="MonitorDashboard" Command="{Binding SideButtonCommand[MonitorDashboard]}"></uc:SideButton>
+                        <uc:SideButton Icon="FileCompare" Command="{Binding SideButtonCommand[PerformanceReport]}"/>
+
+
                     </StackPanel>
                 </StackPanel>
             </Grid>

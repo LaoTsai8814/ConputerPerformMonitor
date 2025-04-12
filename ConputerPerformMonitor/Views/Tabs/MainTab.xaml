@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:ConputerPerformMonitor.Views.Tabs"
              xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:uc="clr-namespace:ConputerPerformMonitor.Views.UserControls" 
-             xmlns:chart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-             >
+             xmlns:chart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -16,9 +15,10 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <UniformGrid Columns="3">
-                <uc:DashBoardCard CoreTemp="{Binding CpuUsage}" CircleDashBoardCenterText="{Binding CpuUsageString}" HardwareType="CPU" Command="{Binding CpuDetail}"></uc:DashBoardCard>
-                <uc:DashBoardCard CoreTemp="{Binding GpuUsage}" CircleDashBoardCenterText="{Binding GpuUsageString}" HardwareType="GPU" Command="{Binding GpuDetail}"></uc:DashBoardCard>
-                <uc:DashBoardCard CoreTemp="{Binding RamUsage}" CircleDashBoardCenterText="{Binding RamUsageString}" HardwareType="RAM" Command="{Binding RamDetail}"></uc:DashBoardCard>
+                <uc:DashBoardCard CoreTemp="{Binding CpuUsage}" CircleDashBoardCenterText="{Binding CpuUsageString}" HardwareType="CPU" Command="{Binding CpuDetail}" Spec="{Binding CpuCardSpec}"></uc:DashBoardCard>
+                <uc:DashBoardCard CoreTemp="{Binding GpuUsage}" CircleDashBoardCenterText="{Binding GpuUsageString}" HardwareType="GPU" Command="{Binding GpuDetail}" Spec="{Binding GpuCardSpec}"></uc:DashBoardCard>
+                <uc:DashBoardCard CoreTemp="{Binding RamUsage}" CircleDashBoardCenterText="{Binding RamUsageString}" HardwareType="RAM" Command="{Binding RamDetail}" Spec="{Binding RamCardSpec}"></uc:DashBoardCard>
+
             </UniformGrid>
         </Grid>
         <Grid  Grid.Row="1">

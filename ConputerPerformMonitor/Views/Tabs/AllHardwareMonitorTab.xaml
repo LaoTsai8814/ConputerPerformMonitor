@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="ConputerPerformMonitor.Views.Tabs.AllHardwareMonitorTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ConputerPerformMonitor.Views.Tabs"
+             xmlns:uc="clr-namespace:ConputerPerformMonitor.Views.UserControls" 
+             >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <UniformGrid Columns="10">
+            <uc:InfoCard HardwareType="CPU" Command="{Binding HardwareInfoProperty[CPU]}"/>
+            <!--CPU-->
+            <uc:InfoCard HardwareType="GPU" Command="{Binding HardwareInfoProperty[GPU]}"/>
+            <!--GPU-->
+            <uc:InfoCard HardwareType="MB" Command="{Binding HardwareInfoProperty[Motherboard]}"/>
+            <!--motherboard-->
+            <uc:InfoCard HardwareType="RAM" Command="{Binding HardwareInfoProperty[RAM]}"/>
+            <!--memory-->
+            <uc:InfoCard HardwareType="DISK" Command="{Binding HardwareInfoProperty[Storage]}"/>
+            <!--storage-->
+            <uc:InfoCard HardwareType="Network" Command="{Binding HardwareInfoProperty[Network]}"/>
+            <!--network-->
+            <uc:InfoCard HardwareType="Sound" Command="{Binding HardwareInfoProperty[Sound]}"/>
+            <!--sound-->
+            <uc:InfoCard HardwareType="USB" Command="{Binding HardwareInfoProperty[USB]}"/>
+            <!--usb-->
+            <uc:InfoCard HardwareType="PSU" Command="{Binding HardwareInfoProperty[Battery]}"/>
+            <!--psu-->
+            <uc:InfoCard HardwareType="OS" Command="{Binding HardwareInfoProperty[OS]}"/>
+            <!--operatingsystem-->
+        </UniformGrid>
+        <Grid Grid.Row="1">
+            <UserControl Content="{Binding CurrentHardwareTab}"/>
+        </Grid>
+        
+    </Grid>
+</UserControl>

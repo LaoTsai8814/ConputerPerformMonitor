@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.IconPacks;
+﻿using ConputerPerformMonitor.Views.Tabs;
+using MahApps.Metro.IconPacks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,36 @@ namespace ConputerPerformMonitor.Views.UserControls
         // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IconProperty =
             DependencyProperty.Register("Icon", typeof(PackIconMaterialKind), typeof(SideButton));
+
+
+
+
+        public ICommand Command
+        {
+            get { return (ICommand)GetValue(CommandProperty); }
+            set {
+                
+                SetValue(CommandProperty, value); 
+            }
+        }
+
+        // Using a DependencyProperty as the backing store for Command.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CommandProperty =
+            DependencyProperty.Register("Command", typeof(ICommand), typeof(SideButton),new PropertyMetadata(null));
+
+
+
+
+
+        public string CommandParameter
+        {
+            get { return (string)GetValue(CommandParameterProperty); }
+            set { SetValue(CommandParameterProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for CommandParameter.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CommandParameterProperty =
+            DependencyProperty.Register("CommandParameter", typeof(string), typeof(SideButton), new PropertyMetadata("MainTab"));
     }
 
 

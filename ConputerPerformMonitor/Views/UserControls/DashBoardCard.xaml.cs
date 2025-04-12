@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -66,6 +67,18 @@ namespace ConputerPerformMonitor.Views.UserControls
         // Using a DependencyProperty as the backing store for HardwareType.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HardwareTypeProperty =
             DependencyProperty.Register("HardwareType", typeof(string), typeof(DashBoardCard));
+
+
+        public ObservableCollection<string> Spec
+        {
+            get { return (ObservableCollection<string>)GetValue(CpuSpecProperty); }
+            set { SetValue(CpuSpecProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CpuSpecProperty =
+            DependencyProperty.Register("Spec", typeof(ObservableCollection<string>), typeof(DashBoardCard),new PropertyMetadata(null));
+
 
 
 

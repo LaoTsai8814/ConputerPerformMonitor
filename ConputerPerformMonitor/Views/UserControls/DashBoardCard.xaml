@@ -23,15 +23,76 @@
             </Style>
         </Border.Style>
         <Border.InputBindings>
-            <MouseBinding Command="{Binding Command, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            <MouseBinding Command="{Binding Command, RelativeSource={RelativeSource AncestorType=local:DashBoardCard}}"
                           MouseAction="LeftClick"/>
         </Border.InputBindings>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <TextBlock Text="{Binding ElementName=dashboardcard,Path=HardwareType}" FontSize="40" VerticalAlignment="Center" Margin="40" Foreground="#edeeee"></TextBlock>
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                
+                    <!--<TextBlock Text="{Binding ElementName=dashboardcard,Path=HardwareType}"  VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="#edeeee"/>-->
+                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" BorderThickness="0" Background="#1e2e44">
+                    <StackPanel >
+                        <TextBlock Text="{Binding HardwareType, RelativeSource={RelativeSource AncestorType=local:DashBoardCard}}"  VerticalAlignment="Center" HorizontalAlignment="Left" Background="#1e2e44" Foreground="#edeeee"/>
+                        <ListView ItemsSource="{Binding Spec, RelativeSource={RelativeSource AncestorType=local:DashBoardCard}}" FontSize="12" HorizontalAlignment="Stretch" Background="#1e2e44">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="Background" Value="#1e2e44"/>
+                                    <Setter Property="Foreground" Value="#edeeee"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListViewItem">
+                                                <Border 
+                                                    Name="Bd"
+                                                    Background="{TemplateBinding Background}" 
+                                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                                    BorderThickness="0"
+                                                    Padding="5"
+                                                >
+                                                    <ContentPresenter Content="{TemplateBinding Content}" />
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Bd" Property="Background" Value="#2a3e5c"/>
+                                                    </Trigger>
+                                                    
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="Bd" Property="Background" Value="#3b5070"/>
+                                                        <Setter TargetName="Bd" Property="BorderBrush" Value="#1e2e44"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" 
+                                    HorizontalAlignment="Stretch" 
+                                    />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                        
+                    </ScrollViewer>
+                
+                
+            </Grid>
+            <Grid Grid.Column="1">
                 <local:CircleDashBoard ></local:CircleDashBoard>
-            
-        </StackPanel>
+            </Grid>
+        </Grid>
+        
         
         
                

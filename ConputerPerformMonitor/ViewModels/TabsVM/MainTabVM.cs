@@ -10,6 +10,8 @@ using System.Runtime.CompilerServices;
 
 using System.Timers;
 using System.Windows.Input;
+using System.Collections.ObjectModel;
+using ConputerPerformMonitor.Views.Tabs;
 
 namespace ConputerPerformMonitor.ViewModels.TabsVM
 {
@@ -18,7 +20,6 @@ namespace ConputerPerformMonitor.ViewModels.TabsVM
         public event PropertyChangedEventHandler? PropertyChanged;
         private System.Timers.Timer _timer;
         private int _timeCounter = 0;
-        
         public void CpuUsageViewModel()
         {
             
@@ -45,6 +46,13 @@ namespace ConputerPerformMonitor.ViewModels.TabsVM
                     Values = new ChartValues<double> { 0 },
                     Stroke = System.Windows.Media.Brushes.Red,
                     Fill = System.Windows.Media.Brushes.Transparent
+                },
+                new LineSeries
+                {
+                    Title = "NETWORK Usage",
+                    Values = new ChartValues<double> { 0 },
+                    Stroke = System.Windows.Media.Brushes.Red,
+                    Fill = System.Windows.Media.Brushes.Transparent
                 }
             };
 
@@ -66,6 +74,7 @@ namespace ConputerPerformMonitor.ViewModels.TabsVM
             double cpuUsage = CpuUsage;
             double gpuUsage = GpuUsage;
             double ramUsage = RamUsage;  // 这里应该换成 CPU 实时数据
+            double networkUsage = NetworkUsage;
             _timeCounter++;
 
             // 确保 UI 线程更新数据
@@ -76,20 +85,59 @@ namespace ConputerPerformMonitor.ViewModels.TabsVM
                     UsageSeries[0].Values.RemoveAt(0);
                     UsageSeries[1].Values.RemoveAt(0);
                     UsageSeries[2].Values.RemoveAt(0);
+                    UsageSeries[3].Values.RemoveAt(0);
                     Labels.RemoveAt(0);
                 }
 
                 UsageSeries[0].Values.Add(cpuUsage);
                 UsageSeries[1].Values.Add(gpuUsage);
                 UsageSeries[2].Values.Add(ramUsage);
+                UsageSeries[3].Values.Add(networkUsage);
                 Labels.Add(_timeCounter.ToString());
 
                 OnPropertyChanged(nameof(UsageSeries));
                 OnPropertyChanged(nameof(Labels));
             });
         }
-
-
+        ObservableCollection<string> _cpuCardSpec = new();
+        ObservableCollection<string> _gpuCardSpec = new();
+        ObservableCollection<string> _ramCardSpec = new();
+        public ObservableCollection<string> CpuCardSpec
+        {
+            get
+            {
+                return _cpuCardSpec;
+            }
+            set
+            {
+                _cpuCardSpec = value;
+                OnPropertyChanged();
+            }
+        }
+        public ObservableCollection<string> RamCardSpec
+        {
+            get
+            {
+                return _ramCardSpec;
+            }
+            set
+            {
+                _ramCardSpec = value;
+                OnPropertyChanged();
+            }
+        }
+        public ObservableCollection<string> GpuCardSpec
+        {
+            get
+            {
+                return _gpuCardSpec;
+            }
+            set
+            {
+                _gpuCardSpec = value;
+                OnPropertyChanged();
+            }
+        } 
 
         /// <summary>
         /// CPU Usage
@@ -165,13 +213,49 @@ namespace ConputerPerformMonitor.ViewModels.TabsVM
 
             }
         }
-        ICommand CpuDetail { get; set; }
-        ICommand GpuDetail { get; set; }
-        ICommand RamDetail { get; set; }
+        private int _networkUsage;
+        public int NetworkUsage
+        {
+            get { return _networkUsage; }
+            set
+            {
+                _networkUsage = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(RamUsageString));
+            }
+        }
+        public string NetworkUsageString
+        {
+            get
+            {
+
+                return _networkUsage.ToString() + "%";
+
+            }
+        }
+        public ICommand CpuDetail { get; set; }
+        public ICommand GpuDetail { get; set; }
+        public ICommand RamDetail { get; set; }
         public MainTabVM()
         {
             TemperatureManage.UpdateTemp += UpdateUITemp;
             CpuUsageViewModel();
+            HardwareCpuSpec hardwarecpuspec = new();
+            HardwareCpuSpec.BasicSpec["CPU"].ForEach(x =>
+            {
+                Trace.WriteLine(x);
+                CpuCardSpec.Add(x);
+            });
+            HardwareCpuSpec.BasicSpec["GPU"].ForEach(x =>
+            {
+                Trace.WriteLine(x);
+                GpuCardSpec.Add(x);
+            });
+            HardwareCpuSpec.BasicSpec["RAM"].ForEach(x =>
+            {
+                Trace.WriteLine(x);
+                RamCardSpec.Add(x);
+            });
             CpuDetail = new RelayCommand(CheckCpuDetail);
             GpuDetail = new RelayCommand(CheckGpuDetail);
             RamDetail = new RelayCommand(CheckRamDetail);
@@ -180,17 +264,22 @@ namespace ConputerPerformMonitor.ViewModels.TabsVM
 
         private void CheckRamDetail(object obj)
         {
-            throw new NotImplementedException();
+            InfomationTab tab = new("RAM");
+            TabManager.MaunallyAddTab(typeof(InfomationTab), tab);
+
         }
 
         private void CheckGpuDetail(object obj)
         {
-            throw new NotImplementedException();
+            InfomationTab tab = new("GPU");
+            TabManager.MaunallyAddTab(typeof(InfomationTab), tab);
+
         }
 
         private void CheckCpuDetail(object obj)
         {
-            throw new NotImplementedException();
+            InfomationTab tab = new("CPU");
+            TabManager.MaunallyAddTab(typeof(InfomationTab), tab);
         }
         protected void UpdateUITemp(TemperatureData temperatureData)
         {
@@ -211,6 +300,11 @@ namespace ConputerPerformMonitor.ViewModels.TabsVM
                 {
                     Trace.WriteLine($"Memory: {x.Value}");
                     RamUsage = (int)x.Value;
+                }
+                if (x.Name == "Network Utilization")
+                {
+                    Trace.WriteLine($"Network Utilization: {x.Value}");
+                    NetworkUsage = (int)x.Value;
                 }
             });
 
