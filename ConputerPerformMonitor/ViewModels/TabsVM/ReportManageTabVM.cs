@@ -14,11 +14,11 @@ namespace ConputerPerformMonitor.ViewModels.TabsVM
 {
     public class ReportManageTabVM : INotifyPropertyChanged
     {
-        public int _cpuUsage { get; set; }
+        public static int _cpuUsage { get; set; }
 
-        public int _ramUsage { get; set; }
+        public static int _ramUsage { get; set; }
 
-        public int _gpuUsage { get; set; }
+        public static int _gpuUsage { get; set; }
 
 
         private object _Tab;
@@ -36,13 +36,13 @@ namespace ConputerPerformMonitor.ViewModels.TabsVM
             {
 
                 _isautoactive = value;
-                /*
+                
                 if (_isautoactive)
                 {
                     DateTime time = DateTime.Today;
                     _dataManageTab.CreateDBFile();
-                    Timer timer = new Timer(new TimerCallback((e) => _dataManageTab.InsertLog(DateTime.Today.ToShortDateString(),DateTime.Now.ToShortTimeString(),_cpuUsage.ToString(),_gpuUsage.ToString(),_ramUsage.ToString())), null, 0, 86400);
-                }*/
+
+                }
                 OnPropertyChanged();
 
             }

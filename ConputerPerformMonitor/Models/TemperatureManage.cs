@@ -11,6 +11,14 @@ using System.Collections.Concurrent;
 
 namespace ConputerPerformMonitor.Models
 {
+
+    public class Log{
+        public string date;
+        public string time;
+        public string cpu;
+        public string memory;
+        public string gpu;
+    }
     public class TemperatureManage
     {
         public static event Action<TemperatureData>? UpdateTemp;

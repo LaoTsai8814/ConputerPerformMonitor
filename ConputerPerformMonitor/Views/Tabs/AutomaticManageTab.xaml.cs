@@ -26,7 +26,7 @@ namespace ConputerPerformMonitor.Views.Tabs
         public AutomaticManage()
         {
             InitializeComponent();
-            DataContext = reportManageTabVM;
+            this.DataContext = reportManageTabVM;
         }
 
     }

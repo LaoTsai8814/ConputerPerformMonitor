@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.IO;
 using System.Windows.Documents;
+using ConputerPerformMonitor.ViewModels.TabsVM;
 namespace ConputerPerformMonitor.Models
 {
     public class DataManage
@@ -20,8 +21,17 @@ namespace ConputerPerformMonitor.Models
             Lastestdatetime = today;
             if (!File.Exists($"./PerformanceLog_{today}.db"))
             {
-                SQLiteConnection.CreateFile($@"PerformanceLog_{today}.db");
+                SQLiteConnection.CreateFile($@"PerformanceLog_{Lastestdatetime.Year}{Lastestdatetime.Month}{Lastestdatetime.Day}.db");
                 CreateTable();
+                Log log = new Log()
+                {
+                    date = DateTime.Today.ToShortDateString(),
+                    time = DateTime.Now.ToShortTimeString(),
+                    cpu=ReportManageTabVM._cpuUsage.ToString(),
+                    memory = ReportManageTabVM._ramUsage.ToString(),
+                    gpu = ReportManageTabVM._gpuUsage.ToString()
+                };
+                InsertLog(log);
             }
             
         }
@@ -39,7 +49,7 @@ namespace ConputerPerformMonitor.Models
         }
         public void CreateTable()
         {
-            sqliteConnection = new SQLiteConnection($"Data Source=./PerformanceLog_{Lastestdatetime}.db");
+            sqliteConnection = new SQLiteConnection($"Data Source=./PerformanceLog_{Lastestdatetime.Year}{Lastestdatetime.Month}{Lastestdatetime.Day}.db");
             sqliteConnection.Open();
             string sql = "CREATE TABLE IF NOT EXISTS PerformanceLog (ID INTEGER PRIMARY KEY AUTOINCREMENT, Date TEXT, Time TEXT, CPU TEXT, Memory TEXT, GPU TEXT)";
             SQLiteCommand command = new SQLiteCommand(sql, sqliteConnection);
@@ -47,21 +57,29 @@ namespace ConputerPerformMonitor.Models
             sqliteConnection.Close();
         }
 
-        public void InsertLog(string date, string time, string cpu, string memory, string gpu)
+        public void InsertLog(Log log)
         {
-            using (var connection = new SQLiteConnection($"Data Source=./PerformanceLog_{Lastestdatetime}.db"))
+            using (var connection = new SQLiteConnection($"Data Source=./PerformanceLog_{Lastestdatetime.Year}{Lastestdatetime.Month}{Lastestdatetime.Day}.db"))
             {
                 connection.Open();
                 string sql = "INSERT INTO PerformanceLog (Date, Time, CPU, Memory, GPU) VALUES (@Date, @Time, @CPU, @Memory, @GPU)";
                 using (var command = new SQLiteCommand(sql, connection))
                 {
-                    command.Parameters.AddWithValue("@Date", date);
-                    command.Parameters.AddWithValue("@Time", time);
-                    command.Parameters.AddWithValue("@CPU", cpu);
-                    command.Parameters.AddWithValue("@Memory", memory);
-                    command.Parameters.AddWithValue("@GPU", gpu);
+                    command.Parameters.AddWithValue("@Date", log.date);
+                    command.Parameters.AddWithValue("@Time", log.time);
+                    command.Parameters.AddWithValue("@CPU", log.cpu);
+                    command.Parameters.AddWithValue("@Memory", log.memory);
+                    command.Parameters.AddWithValue("@GPU", log.gpu);
 
-                    command.ExecuteNonQuery();
+                    try
+                    {
+                        command.ExecuteNonQuery();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error inserting log: {ex.Message}");
+                    }
                 }
             }
         }

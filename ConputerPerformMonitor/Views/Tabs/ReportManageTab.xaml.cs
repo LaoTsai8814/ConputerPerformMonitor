@@ -42,7 +42,6 @@ namespace ConputerPerformMonitor.Views.Tabs
         private static void OnManualChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ReportManageTab reportManageTab = d as ReportManageTab;
-            reportManageTab.IsAutoUpdateActive = (bool)e.NewValue;
             if (reportManageTab.IsAutoUpdateActive)
             {
                 reportManageTab.IsManuallyUpdateActive = false;
@@ -65,7 +64,6 @@ namespace ConputerPerformMonitor.Views.Tabs
         private static void OnAutomaticChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ReportManageTab reportManageTab = d as ReportManageTab;
-            reportManageTab.IsManuallyUpdateActive = (bool)e.NewValue;
             if (reportManageTab.IsManuallyUpdateActive)
             {
                 reportManageTab.IsAutoUpdateActive = false;
